@@ -25,7 +25,6 @@ const testMongo = require('./routes/mongo');
 //import the index route, CHANGED TO LOGINPAGE.JS
 //const index = require('./routes/index.js');
 //import the login route
-
 // tests to see if adding to db is possible
 testMongo.testAddToDB();
 //____________________________________________

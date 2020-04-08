@@ -1,6 +1,7 @@
 ////require the express library
 var express = require('express');
 var router = express();
+const mongoose = require('mongoose');
 var User = require('../lib/User'); //correct file path.
 //set up a port
 const port = process.env.PORT || 8080;
@@ -24,8 +25,6 @@ router.use(session(
 
 router.use(express.static(path.join(__dirname, 'public')));
 
-const mongoose = require('mongoose');
-
 // how to associate specific database
 mongoose.connect('mongodb://localhost/groupmeet',
 {
@@ -38,6 +37,31 @@ mongoose.connect('mongodb://localhost/groupmeet',
 router.get('/',(request,response,next) => {
   response.sendFile(path.resolve('./views/login.html'));
 });
+
+// //get specific username
+// router.get('/',(req, res, next) => {
+//   User.find().select('username password _id').exec().then(docs => {
+//     res.status(200).json({
+//       count: docs.length,
+//       orders: docs.map(doc => {
+//         return {
+//           _id: doc._id,
+//           username: doc.username,
+//           password: doc.password,
+//           request: {
+//             type: "GET",
+//             url: "http://localhost:8080/register/" + doc._id
+//           }
+//         };
+//       })
+//     });
+//   })
+//   .catch(err => {
+//     res.status(500).json({
+//       error: err
+//     });
+//   })
+// });
 
 //register new user and save to database
 router.post('/signup',function(request,response){
@@ -104,13 +128,56 @@ router.get('/dashboard',function(request,response){
         return response.status(401).send();
     }
     //display logged in user page
-    return response.status(200).send("Welcome to the secret API");
+    return response.status(200).send("Welcome to the user dash");
 });
 
 //logout user
 router.get('logout',function(request,response){
     request.session.destroy();
     return status(200).send();
+});
+
+//find specific user
+router.post("/getUser", (req, res, next) => {
+  User.findById(req.body._id)
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+      const user2 = new User({
+        _id: mongoose.Types.ObjectId(),
+        username: req.body.username,
+        password: req.body.password,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
+      });
+      return user.save();
+    })
+    .then(result => {
+      console.log(result);
+      res.status(201).json({
+        message: "User stored",
+        createdOrder: {
+          _id: result._id,
+          username: result.username,
+          password: result.password,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname
+        },
+        request: {
+          type: "POST",
+          url: "http://localhost:3000/register/" + result._id
+        }
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 
 module.exports = router;
