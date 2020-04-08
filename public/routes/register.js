@@ -122,22 +122,13 @@ router.post('/login',function(request,response){
     });
 });
 
-//view logged in user dashboard
-router.get('/dashboard',function(request,response){
-    if(!request.session.user){
-        return response.status(401).send();
-    }
-    //display logged in user page
-    return response.status(200).send("Welcome to the user dash");
-});
-
 //logout user
 router.get('logout',function(request,response){
     request.session.destroy();
     return status(200).send();
 });
 
-//find specific user
+//add and find specific user
 router.post("/getUser", (req, res, next) => {
   User.findById(req.body._id)
     .then(user => {
