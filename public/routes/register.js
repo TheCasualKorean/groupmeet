@@ -99,7 +99,7 @@ router.post('/signup',function(request,response){
         return response.status(200).send();
         response.sendFile(path.resolve('./views/dashboard.html'));
     });
-});
+}); //end signup
 
 //login user
 router.post('/login',function(request,response){
@@ -120,17 +120,85 @@ router.post('/login',function(request,response){
        request.session.user = user;
        return response.status(200).send("logged in!");
     });
-});
+}); //end login
 
 //logout user
 router.get('logout',function(request,response){
     request.session.destroy();
     return status(200).send();
-});
+}); //end logout
 
-//add and find specific user
-router.post("/getUser", (req, res, next) => {
-  User.findById(req.body._id)
+//gets all users and reads all saved data in databse with empty object check
+router.get('/getUsers', function(request,response){
+    User.find({}, function(err,foundData){
+        if(err){
+            console.log(err);
+            response.status(500).send();
+        }else{
+            if(foundData.length === 0){
+                var responseObject = undefined;
+                responseObject = {count:0};
+                response.status(404).send(responseObject);
+            } else{
+                var responseObject = foundData;
+                console.log("reached here");
+                response.send(responseObject);
+            }
+        }
+    });
+}); //end get all users
+
+//get specific user
+router.get("/:user_id", (req, res, next) => {
+  User.findById(req.params.user_id)
+    .exec()
+    .then(user => {
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        });
+      }
+      res.status(200).json({
+        //show all users
+        user: user,
+        request: {
+          type: "GET",
+          url: "http://localhost:3000/register/getUsers"
+        }
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      }) ;
+    });
+});  // end get specific user
+
+// delete specific user
+router.delete("/:user_id", (req, res, next) => {
+  User.remove({ _id: req.params.user_id })
+  .exec()
+  .then(result => {
+    res.status(200).json({
+      message: 'Order deleted',
+      request: {
+        type: "POST",
+        url: "http://localhost8080:/register/getUsers",
+        body: { user_id: 'user_id', username: 'username'}
+      }
+    });
+  })
+  .catch(err => {
+    res.status(500).json({
+      error: err
+    });
+  });
+}); // end delete specific user
+
+
+//add and find specific user WORKING ON THIS***********
+router.post("/", (req, res, next) => {
+  User.findById(req.body.user_id)
     .then(user => {
       if (!user) {
         return res.status(404).json({
@@ -144,7 +212,7 @@ router.post("/getUser", (req, res, next) => {
         firstname: req.body.firstname,
         lastname: req.body.lastname
       });
-      return user.save();
+      return user2.save();
     })
     .then(result => {
       console.log(result);
@@ -158,7 +226,7 @@ router.post("/getUser", (req, res, next) => {
           lastname: req.body.lastname
         },
         request: {
-          type: "POST",
+          type: "GET",
           url: "http://localhost:3000/register/" + result._id
         }
       });
