@@ -14,6 +14,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(express.urlencoded({extended: false}));
+const bcrypt = require("bcrypt");
 //register session to app
 router.use(session(
         {
@@ -63,63 +64,124 @@ router.get('/',(request,response,next) => {
 //   })
 // });
 
-//register new user and save to database
-router.post('/signup',function(request,response){
-    //route flag
-    console.log("BEGINNING OF register action reached");
-//remo
-    var username = request.body.username;
-    var password = request.body.password;
-    var firstname = request.body.firstname;
-    var lastname = request.body.lastname;
-
-    console.log(`username ${username}`);
-    console.log(`password: ${password}`);
-    console.log(`firstname: ${firstname}`);
-    console.log(`lastname: ${lastname}`);
-
-    var newUser = new User();
-    newUser.username = username;
-    newUser.password = password;
-    newUser.firstname = firstname;
-    newUser.lastname = lastname;
-
-    //save user
-//    newUser.collection.insertOne(function(err,savedUser){
-      User.collection.insertOne(newUser,function(err,savedUser){
-        if(err){
-            //log error if one exists
+router.post('/signup', (req, res, next) => {
+  User.find({username: req.body.username})
+  .exec()
+  .then(user => {
+    if(user.length >= 1){
+      return res.status(409).json({
+        message: 'Username exists'
+      });
+    } else {
+      bcrypt.hash(req.body.password, 10, (err,hash) => {
+        if(err) {
+          return res.status(500).json({
+            error: err
+          });
+        } else {
+          const user = new User ({
+            _id: new mongoose.Types.ObjectId(),
+            username: req.body.username,
+            password: bcrypt.hash(req.body.password)
+          });
+          user.save()
+          .then(result => {
+            res.status(201).json({
+              message: 'User created'
+            });
+          })
+          .catch(err => {
             console.log(err);
-            return response.status(500).send();
+            res.status(500).json({
+              error: err
+            });
+          });
         }
-        //return successful status
-
-       response.send(`User: ${newUser.username} added!`);
-        console.log("loginpage.js register action reached end");
-        return response.status(200).send();
-        response.sendFile(path.resolve('./views/dashboard.html'));
-    });
+      })
+    }
+  });
 }); //end signup
 
+// //register new user and save to database
+// router.post('/signup',function(request,response){
+//     //route flag
+//     console.log("BEGINNING OF register action reached");
+// //remo
+//     var username = request.body.username;
+//     var password = request.body.password;
+//     var firstname = request.body.firstname;
+//     var lastname = request.body.lastname;
+//
+//     console.log(`username ${username}`);
+//     console.log(`password: ${password}`);
+//     console.log(`firstname: ${firstname}`);
+//     console.log(`lastname: ${lastname}`);
+//
+//     var newUser = new User();
+//     newUser.username = username;
+//     newUser.password = password;
+//     newUser.firstname = firstname;
+//     newUser.lastname = lastname;
+//
+//     //save user
+// //    newUser.collection.insertOne(function(err,savedUser){
+//       User.collection.insertOne(newUser,function(err,savedUser){
+//         if(err){
+//             //log error if one exists
+//             console.log(err);
+//             return response.status(500).send();
+//         }
+//         //return successful status
+//
+//        response.send(`User: ${newUser.username} added!`);
+//         console.log("loginpage.js register action reached end");
+//         return response.status(200).send();
+//         response.sendFile(path.resolve('./views/dashboard.html'));
+//     });
+// }); //end signup
+
 //login user
-router.post('/login',function(request,response){
-    var username = request.body.username;
-    var password = request.body.password;
+router.post('/login', (req,res, next) => {
     //specify user to find by username and password
-    User.findOne({username: username, password: password}, function(err,user){
-       if(err) {
-           //error found, log error
-           console.log(err);
-           return response.status(500).send();
-       }
-       //user doesnt exist
-       if(!user) {
-           return response.status(404).send();
-       } //user exists
-       //set logged in user session
-       request.session.user = user;
-       return response.status(200).send("logged in!");
-    });
+    User.find({username: req.body.username})
+    .exec()
+    .then(user => {
+      if (user.length < 1){
+        return res.status(401).json({
+          message: 'Authorization failed 1'
+        }); // end if 'user not found'
+      } //end if(user.length <1)
+      bcrypt.compare(req.body.password, user[0].password, (err,result) => {
+        if (err){
+          return res.status(401).json({
+            message: 'Authorization failed 2'
+          }); // end if 'user not found'
+        } //end if(err)
+
+        if (result){
+        //   const token = jwt.sign({ username: user[0].username, userId: user[0]._id},
+        //   process.env.JWT_KEY,
+        //   {
+        //     expiresIn: "1h"
+        //   }
+        // );
+          return res.status(200).json({
+            message: 'Successful login'
+            // ,token: token
+          }); // end success message
+        } //end if(result)
+        res.status(401).json({
+          message: "Auth failed"
+        });
+
+      }); //end bcrypt password comparison
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      }); // end catch json return data
+    }); //end catch
 }); //end login
 
 //logout user
@@ -196,7 +258,7 @@ router.delete("/:user_id", (req, res, next) => {
 }); // end delete specific user
 
 
-//add and find specific user WORKING ON THIS***********
+//add and find specific user WORKING ON THIS**************************************************************
 router.post("/", (req, res, next) => {
   User.findById(req.body.user_id)
     .then(user => {
