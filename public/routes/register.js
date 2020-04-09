@@ -15,6 +15,8 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.json());
 router.use(express.urlencoded({extended: false}));
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 //register session to app
 router.use(session(
         {
@@ -159,15 +161,16 @@ router.post('/login', (req,res, next) => {
         } //end if(err)
 
         if (result){
-        //   const token = jwt.sign({ username: user[0].username, userId: user[0]._id},
-        //   process.env.JWT_KEY,
-        //   {
-        //     expiresIn: "1h"
-        //   }
-        // );
+          const token = jwt.sign({ username: user[0].username, userId: user[0]._id},
+          // process.env.JWT_KEY,
+          "secret", //THIS SHOULD BE CHANGED TO PULL FROM A NODEMON.JSON FILE BUT I CANT GET IT TO WORK RIGHT NOW, LINE ABOVE THIS NEEDS TO WORK
+          {
+            expiresIn: "1h"
+          }
+        );
           return res.status(200).json({
-            message: 'Successful login'
-            // ,token: token
+            message: 'Successful login',
+            token: token
           }); // end success message
         } //end if(result)
         res.status(401).json({
