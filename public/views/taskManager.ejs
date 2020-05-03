@@ -26,40 +26,51 @@
 
         </div>
       </header>
-      <div class="dragndrop">
-        <div class="div_lists">
-          <div class="separate_list todoBox">
-            <div id="todoHeader">
-              To Do
-            </div>
-            <div class="list-item" draggable="true">
-              <h5>Test Task 1</h5>
-              <p>Matthew</p>
-            </div>
-            <div class="list-item" draggable="true">
-              <h5>Test Task 2</h5>
-              <p>Matthew</p>
-            </div>
-            <div class="list-item" draggable="true">
-              <h5>Test Task 3</h5>
-              <p>Matthew</p>
-            </div>
-          </div>
-          <div class="separate_list inProgressBox">
-            <div id="inProgressHeader">
-              In Progress
-            </div>
-          </div>
-          <div class="separate_list completedBox">
-            <div id="completedHeader">
-              Completed
-            </div>
-          </div>
-          <div class="separate_list helpBox">
-            <div id="helpHeader">
-              Help
-            </div>
-          </div>
+      <div class="hiddenOverflow">
+        <div class="scrollable">
+          <table class="taskManagerTable">
+            <thead>
+              <tr>
+                <th class="tableHeader">Name</th>
+                <th class="tableHeader">Task</th>
+                <th class="tableHeader">Task Description</th>
+                <th class="tableHeader">Progress</th>
+                <th class="tableHeader">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="tableCell">Matthew McCoy</td>
+                <td class="tableCell">Task Manager</td>
+                <td class="tableCell tableDescription">
+                  This is a description of what I am writing for this task.
+                  This is a description of what I am writing for this task.
+                  This is a description of what I am writing for this task.
+                </td>
+                <td class="tableCell">Need Help</td>
+                <td class="tableCell">
+                  <a href="/updateTask" class="actionButtonsTM">Update</a>
+                  <a href="#" class="actionButtonsTM">Delete</a>
+                </td>
+              </tr>
+              <% if (fullName != "Not Signed In") {%>    
+                <% for(var i=0; i<global.groupTasks.length; i++) {%>                  
+                  <tr>
+                    <td class="tableCell"><%= global.groupTasks[i]["creatorName"]%></td>
+                    <td class="tableCell"><%= global.groupTasks[i]["taskName"]%></td>
+                    <td class="tableCell tableDescription">
+                      <%= global.groupTasks[i]["description"]%>
+                    </td>
+                    <td class="tableCell"><%= global.groupTasks[i]["status"]%></td>
+                    <td class="tableCell">
+                      <a href="/updateTask/<%= global.groupTasks[i]['_id']%>" class="actionButtonsTM">Update</a>
+                      <a href="/task/deleteTask/<%= global.groupTasks[i]['_id']%>" class="actionButtonsTM">Delete</a>
+                    </td>
+                  </tr>
+                <% } %>
+              <% } %>
+            </tbody>
+          </table>
         </div>
       </div>
   </div>

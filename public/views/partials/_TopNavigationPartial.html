@@ -27,7 +27,12 @@
     <!-- side navigation -->
     <div class="navigation-side">
       <!-- put in the profile picture from the database -->
-      <img src="/assets/avatar.png" alt="avatar" width="100px" height="100px">
+      <% if(userPic == 'Not Signed In') { %>
+        <img src="/assets/avatar.png" alt="avatar" width="100px" height="100px">
+      <% } else { %>
+        <img src="<%= userPic %>" alt="avatar" width="100px" height="100px">
+        <% } %>
+      
 
       <!-- for name and email - add from database -->
       <h4 id="name">

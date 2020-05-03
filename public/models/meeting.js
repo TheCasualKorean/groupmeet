@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const MeetingSchema = new Schema({
     meetingName: String,
     //group: { type: Schema.Types.ObjectId, ref: 'Group'},
-    creatorId: String,
-    attendees: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    meetingTime: Date
+    creatorName: String,
+    location: String,
+    attendees: String,
+    meetingTime: String
 
 })
 
