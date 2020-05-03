@@ -65,6 +65,13 @@ router.post('/newUser',function(request,response){
      
             global.fullName = newUser.firstName + ' ' + newUser.lastName;
             global.userId = newUser._id;
+            global.firstName = newUser.firstName;
+            global.lastName = newUser.lastName;
+            global.email = newUser.email;
+            // console.log(request.session.fullName);
+            // after logged in
+            global.userPic = "https://soulcore.com/wp-content/uploads/2018/01/profile-placeholder.png"//"https://res.cloudinary.com/dk-find-out/image/upload/q_80,w_960,f_auto/sphere_n69vel.png"
+            
             //request.expressSession.userId = newUser._id;
             return response.status(200).redirect(("/dashboard"))
             // return response.redirect(("/dashboard"),{token:token});

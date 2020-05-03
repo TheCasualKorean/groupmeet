@@ -21,15 +21,16 @@
             <h2 class="formTitle">Personal</h2>
             <form method="POST" action="/user/updatePersonal">
               <label for="name" class="formLabel">FIRST NAME</label><br />
-              <input type="text" class="inputsForRegister2" placeholder="new first name" name="firstName"></input><br />
+              <input type="text" class="inputsForRegister2" placeholder="new first name" name="firstName" value="<%= firstName %>"></input><br />
               <br />
               <label for="email" class="formLabel">LAST NAME</label><br />
-              <input type="text" class="inputsForRegister2" placeholder="new last name" name="lastName"></input><br />
+              <input type="text" class="inputsForRegister2" placeholder="new last name" name="lastName" value="<%= lastName %>"></input><br />
               <br />
               <label for="phone" class="formLabel">EMAIL: <% if(typeof email != 'undefined') { %>
                 <%= email %>
               <% } %></label><br />
-              <input type="email" class="inputsForRegister2" placeholder="new email" name="email"></input><br />
+              <input type="email" class="inputsForRegister2" placeholder="new email" name="email" value="<%= email %>"></input><br />
+              <input type="text" class="inputsForRegister2" placeholder="profile picture URL" name="profilePic" value="<%= userPic %>"></input><br />
               <button type="submit" value="Submit"  class="groupmeet-btn accountBtns">Save Settings</button>
             </form>
           </div>

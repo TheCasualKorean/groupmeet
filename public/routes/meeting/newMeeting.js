@@ -7,16 +7,35 @@ var Meeting = require("../../models/meeting");
 var Group = require("../../models/group");
 router.use(bodyParser.urlencoded({extended: true}));
 
+
+const getGroupFunction = require('../group/getGroupFunction');
+
 router.post('/newMeeting',function(request,response){
    // console.log(request.body.groupId)   
+   var tAttendees = ""
+
    
+    console.log(request.body.requestJoin)
+    if(Array.isArray(request.body.requestJoin)){
+        var c = 0;
+        request.body.requestJoin.forEach(element => {
+        console.log(element)
+        if (c != 0){
+            tAttendees += ", "
+        }
+        tAttendees += element
+        c++
+    });
+    } else {
+        tAttendees = request.body.requestJoin
+    }
+    
    var newMeeting = new Meeting({
-       creatorId: request.body.creatorId,
+       creatorName: request.body.fullName,
        meetingName: request.body.meetingName,
-       meetingTime: Date.now(), //will need to be a selected date or changed to string
-       description: request.body.description,
-       meetingName: String,
-       attendees: []
+       location: request.body.location,
+       meetingTime: request.body.idate + " " + request.body.itime, 
+       attendees: tAttendees
    });
 
    // logic to find the current group and insert it into the Meetings array
@@ -26,19 +45,17 @@ router.post('/newMeeting',function(request,response){
            console.log(error+ request.body.groupId);
            return response.status(500).send();
        }
-      response.send(`Meeting: "${newMeeting.text}" added!`);     
-      console.log(`Meeting: "${newMeeting.text}" added!`);
-       return response.status(200).send();
+     
    });
 
     Meeting.collection.insertOne(newMeeting,function(err,success){
         if(err){
             console.log(err);
             return response.status(500).send();
-        }
-        response.send(`Meeting: "${newMeeting.text}" added!`);     
+        }   
     console.log(`Meeting: "${newMeeting.text}" added!`);
-        return response.status(200).send();
+    getGroupFunction.getGroupFunc();
+    return response.status(200).redirect("/meetingTimes");
         
     });
 });

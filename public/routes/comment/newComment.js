@@ -13,11 +13,19 @@ router.use(bodyParser.urlencoded({extended: true}));
 
 router.post('/newComment',function(request,response){
    // console.log(request.body.groupId)   
-   
+   var result="";
+    const date = new Date();
+    const month = date.toLocaleString('default', { month: 'long' });
+    var d = new Date();
+    result += month + " " + ("0" + d.getDate()).slice(-2) + " " + d.getFullYear() +
+    " "+ d.getHours()+":"+d.getMinutes();
+    console.log("result " + result);
+    console.log("datenow "+Date.now())
+    
    var newComment = new Comment({
        creatorName: global.fullName,
        //group:, //might not need as it would just be in the group's array...
-       created: Date.now(),
+       created: result,
        text: request.body.text,
    });
 

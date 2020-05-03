@@ -32,15 +32,15 @@ Group.findOne({_id: global.groupId}).populate("members").populate("comments").po
             global.groupTasks = tasks
             global.groupComments = comments
             global.groupUrls = urls
-            console.log(global.groupName)
-            console.log(global.groupId)
-            console.log(global.groupMembers)
-            console.log(global.groupMeetings)
-            console.log(global.groupTasks)
-            console.log(global.groupComments)
-            console.log(global.groupUrls)
+            // console.log(global.groupName)
+            // console.log(global.groupId)
+            // console.log(global.groupMembers)
+            // console.log(global.groupMeetings)
+            // console.log(global.groupTasks)
+            // console.log(global.groupComments)
+            // console.log(global.groupUrls)
             
-            console.log(`\ngroupName: ${name}\n\nmembers: ${members}\n\ncomments: ${comments}\n\nmeetings: ${meetings}\n\ntasks: ${tasks}\n\ntasks: ${urls}`)
+            // console.log(`\ngroupName: ${name}\n\nmembers: ${members}\n\ncomments: ${comments}\n\nmeetings: ${meetings}\n\ntasks: ${tasks}\n\ntasks: ${urls}`)
     // return response.status(200).redirect(("/groupdashboard"))
         });
   };

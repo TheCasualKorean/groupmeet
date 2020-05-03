@@ -18,7 +18,10 @@ var expressSession = require('./node_modules/express-session');
 // const register = require('./public/routes/register.js');
 
 global.fullName = "Not Signed In";
+global.firstName = "Not Signed In";
+global.lastName = "Not Signed In";
 global.userId = "Not Signed In";
+global.userPic = "Not Signed In";
 global.groupName = "Not Signed In";
 global.groupMembers = "Not Signed In";
 global.groupMeetings = "Not Signed In";
@@ -77,9 +80,9 @@ app.use('/assets', express.static('assets'));
 app.get('/login',(request,response,next) => {
   response.sendFile(__dirname + '/public/views/login.html');
 });
-// app.get('/register',(request,response,next) => {
-//     response.sendFile(__dirname + '/public/views/register.html');
-//   });
+app.get('/register',(request,response,next) => {
+    response.sendFile(__dirname + '/public/views/register.html');
+  });
 
 //default route for the landing page
 app.get('/', function(request, response) {
@@ -103,7 +106,7 @@ app.get('/addGroup', function(request,response) {
 });
 
 app.get('/requestMeeting', function(request,response) {
-  response.sendFile(__dirname + '/public/views/requestMeetingModal.html');
+    response.render(__dirname + '/public/views/requestMeetingModal.ejs');
 });
 
 //default route for the landing page
@@ -164,7 +167,7 @@ app.get('/groupSettings', function(request, response) {
 })
 
 app.get('/meetingTimes', function(request, response) {
-  getGroupButtons(request, response, '/public/views/groupMeetingTimes');
+  getGroupButtons(request, response, '/public/views/meetingManager');
 })
 
 app.get('/taskManager', function(request, response) {

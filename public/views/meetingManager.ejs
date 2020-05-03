@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="icon" href="/assets/favicon.png">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+
+    <title>My Account</title>
+</head>
+<body>
+  <%- include('./partials/_TopNavigationPartial.html') %>
+  <div class="grid_12 taskManagerDiv">
+      <div class="groupButtonDiv">
+        <%- include('./partials/_GroupButtons.html') %>
+      </div>
+      <header id="taskManager">
+        <div class="task">
+    
+            <h1 id="taskManagerHeader">Meetings for <%= groupName %> </h1>
+            <a href="/requestMeeting" class="groupbtn new">Create New</a>
+    
+        </div>
+      </header>
+      <div class="hiddenOverflow">
+        <div class="scrollable">
+          <table class="taskManagerTable">
+            <thead>
+              <tr>
+                <th class="tableHeader">Name</th>
+                <th class="tableHeader">Location</th>
+                <th class="tableHeader">Attendees</th>
+                <th class="tableHeader">Date and Time</th>
+                <th class="tableHeader">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+                          
+                <% for(var i=0; i<global.groupMeetings.length; i++) {%>                  
+                  <tr>
+                    <td class="tableCell"><%= global.groupMeetings[i]["creatorName"]%></td>
+                    <td class="tableCell"><%= global.groupMeetings[i]["location"]%></td>
+                    <td class="tableCell tableDescription">
+                     
+                       <%= global.groupMeetings[i]["attendees"] %>
+                     
+                    </td>
+                    <td class="tableCell"><%= global.groupMeetings[i]["meetingTime"]%></td>
+                    <td class="tableCell">
+                      <a href="/meeting/deleteMeeting/<%= global.groupMeetings[i]['_id']%>" class="actionButtonsTM">Delete</a>
+                    </td>
+                  </tr>
+                <% } %>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
+  <script type="text/javascript" src="/assets/dragndrop.js"></script>
+</body>
