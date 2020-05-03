@@ -16,10 +16,14 @@
       </div>
       <header id="taskManager">
         <div class="task">
-    
-            <h1 id="taskManagerHeader">Task Manager for <%= groupName %> </h1>
+          <% if (typeof group !== undefined) { %>
+            <h1 id="taskManagerHeader">Task Manager</h1>
             <a href="/addNewTask" class="groupbtn new">Create New</a>
-    
+          <% } else { %>
+            <h1 id="taskManagerHeader">Task Manager - <%= group.groupName %> </h1>
+            <a href="/addNewTask" class="groupbtn new">Create New</a>
+          <% } %>
+
         </div>
       </header>
       <div class="hiddenOverflow">

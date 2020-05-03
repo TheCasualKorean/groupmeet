@@ -236,11 +236,13 @@ table {
 }
 
 #urlBox {
-  height: 270px;
+  height: 250px;
+  overflow-y: scroll;
 }
 
 #commentBox {
-  height: 270px;
+  height: 250px;
+  overflow-y: scroll;
 }
 
 #boxHeader {
@@ -738,8 +740,10 @@ th {
   text-decoration: none;
   border: 1px solid rgb(150,45,32);
   background-color: rgb(150,45,32);
-  padding: 12px;
-  margin: 5px 8px;
+  padding: 1px 6px;
+  margin: 0px 8px;
+  display: inline-block;
+  float: right;
   border-radius: 8px;
   transition: 0.2s;
 }
