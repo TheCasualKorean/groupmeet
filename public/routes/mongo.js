@@ -14,7 +14,7 @@ module.exports = {
         useUnifiedTopology: true,
         useNewUrlParser: true,
       };
-      
+
   // Connect option 1: Mongo Atlas Hosting (also works on heroku)
     mongoose.connect("mongodb+srv://admin:N@RBh&bUO35C@cluster0-8gr6n.mongodb.net/test?retryWrites=true&w=majority", options);
 
@@ -27,6 +27,12 @@ module.exports = {
 //         console.log("Connection error: ", err)
 //     })
 
+<<<<<<< HEAD
      }
 
 }
+=======
+//     }
+  }
+}
+>>>>>>> b684fa9b92b1dc47fd83dcbcaf9152fca5dd9261
