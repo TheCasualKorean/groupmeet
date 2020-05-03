@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="icon" href="/assets/favicon.png">
+    <title>GroupMeet - Add A Task</title>
+</head>
+<body class="modalBody">
+  <div class="taskBox">
+      <h2>Add a Task</h2>
+    <form name="addTask" method="GET" action="/taskmanager">
+      <label for="name" class="taskLabel">Name:</label>
+      <input type="text" class="inputsForRegister" placeholder="Enter your name" name="name"></input><br />
+      <label for="taskName" class="taskLabel">Task:</label>
+      <input type="text" class="inputsForRegister" placeholder="What are you working on?" name="taskName"></input><br />
+      <label for="category" class="taskLabel">Category:</label><br>
+      <div class="radioDiv">
+        <input type="radio" class="taskRadioBtn" name="category">To Do</input><br>
+        <input type="radio" class="taskRadioBtn" name="category">In Progress</input><br>
+        <input type="radio" class="taskRadioBtn" name="category">Completed</input><br>
+        <input type="radio" class="taskRadioBtn" name="category">Help</input>
+      </div>
+      <input class="modalSubmit" type="submit" value="Add New Task">
+    </form>
+  </div>
