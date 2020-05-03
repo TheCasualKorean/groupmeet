@@ -35,7 +35,7 @@
               </tr>
             </thead>
             <tbody>
-                          
+              <% if (fullName != "Not Signed In") {%>         
                 <% for(var i=0; i<global.groupMeetings.length; i++) {%>                  
                   <tr>
                     <td class="tableCell"><%= global.groupMeetings[i]["creatorName"]%></td>
@@ -51,7 +51,7 @@
                     </td>
                   </tr>
                 <% } %>
-              
+              <% } %>
             </tbody>
           </table>
         </div>
