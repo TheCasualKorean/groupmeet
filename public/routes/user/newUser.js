@@ -6,17 +6,17 @@ var User = require("../../models/user");
 //configure app to use session
 var expressSession = require('express-session');
 router.use(bodyParser.urlencoded({extended: true}));
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+// const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
 
 //register session to app
-router.use(expressSession(
-        {
-            secret:"67i66igfi6&*6i%$&%^&U",
-            resave: false,
-            saveUninitialized: false
-        }
-));
+// router.use(expressSession(
+//         {
+//             secret:"67i66igfi6&*6i%$&%^&U",
+//             resave: false,
+//             saveUninitialized: false
+//         }
+// ));
 
 //   /user/newUser
 router.post('/newUser',function(request,response){
@@ -25,35 +25,31 @@ router.post('/newUser',function(request,response){
     User.find({email: request.body.email})
   .exec()
   .then(user => {
-    if(user.length >= 1){
+    if(user.length != 0){
       return res.status(409).json({
-        message: 'Username exists'
+        message: 'User exists'
       });
     } else {
-      bcrypt.hash(request.body.password, 10, (err,hash) => {
-        if(err) {
-          return res.status(500).json({
-            error: err
-          });
-        } else {
+      
+         
             var newUser = new User({
                 _id: new mongoose.Types.ObjectId(),
                 firstName: request.body.firstName,
                 lastName: request.body.lastName,
                 groups: [],
                 email: request.body.email,
-                password: hash,
+                password: request.body.password,
                 availableTimes: [],
                 //image will be a file
                 profilePic: "picture will be added as future feature"
             });
          
-            const token = jwt.sign({ fullName: newUser.firstName + " " + newUser.lastName, userId: newUser._id},
-                // process.env.JWT_KEY,
-                "secret", //THIS SHOULD BE CHANGED TO PULL FROM A NODEMON.JSON FILE BUT I CANT GET IT TO WORK RIGHT NOW, LINE ABOVE THIS NEEDS TO WORK
-                {
-                  expiresIn: "1h"
-                });
+            // const token = jwt.sign({ fullName: newUser.firstName + " " + newUser.lastName, userId: newUser._id},
+            //     // process.env.JWT_KEY,
+            //     "secret", //THIS SHOULD BE CHANGED TO PULL FROM A NODEMON.JSON FILE BUT I CANT GET IT TO WORK RIGHT NOW, LINE ABOVE THIS NEEDS TO WORK
+            //     {
+            //       expiresIn: "1h"
+            //     });
          
           User.collection.insertOne(newUser,function(err,savedUser){
             if(err){
@@ -76,8 +72,8 @@ router.post('/newUser',function(request,response){
             return response.status(200).redirect(("/dashboard"))
             // return response.redirect(("/dashboard"),{token:token});
          });
-        }
-      })
+        
+      
     }
   });
   
