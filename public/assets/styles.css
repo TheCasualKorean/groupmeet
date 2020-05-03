@@ -236,12 +236,12 @@ table {
 }
 
 #urlBox {
-  height: 250px;
+  height: 300px;
   overflow-y: scroll;
 }
 
 #commentBox {
-  height: 250px;
+  height: 300px;
   overflow-y: scroll;
 }
 
