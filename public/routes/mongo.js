@@ -16,17 +16,17 @@ module.exports = {
       };
 
   // Connect option 1: Mongo Atlas Hosting (also works on heroku)
-    mongoose.connect("mongodb+srv://admin:N@RBh&bUO35C@cluster0-8gr6n.mongodb.net/test?retryWrites=true&w=majority", options);
+    // mongoose.connect("mongodb+srv://admin:N@RBh&bUO35C@cluster0-8gr6n.mongodb.net/test?retryWrites=true&w=majority", options);
 
   // Connect option 2: Local hosting and URI for use on heroku
-//    mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/groupmeet', options);
+   mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/groupmeet', options);
 
-//     mongoose.connection.once('open', function(){
-//         console.log('connected to groupmeet')
-//     }).on('error', function(err){
-//         console.log("Connection error: ", err)
-//     })
+    mongoose.connection.once('open', function(){
+        console.log('connected to groupmeet')
+    }).on('error', function(err){
+        console.log("Connection error: ", err)
+    })
 
-//     }
+    }
   }
-}
+// }

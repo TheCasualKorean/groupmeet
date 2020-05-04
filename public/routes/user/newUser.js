@@ -41,7 +41,7 @@ router.post('/newUser',function(request,response){
                 password: request.body.password,
                 availableTimes: [],
                 //image will be a file
-                profilePic: "picture will be added as future feature"
+                profilePic: "https://soulcore.com/wp-content/uploads/2018/01/profile-placeholder.png"
             });
          
             // const token = jwt.sign({ fullName: newUser.firstName + " " + newUser.lastName, userId: newUser._id},
