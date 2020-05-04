@@ -18,12 +18,12 @@
       <input type="text" class="inputsForRegister" placeholder="Meeting Place" name="location"></input><br />
       <label for="requestJoin" class="taskLabel">Who:</label><br>
       <div class="radioDiv">
-        <% for(var i=0; i<global.groupMembers.length; i++) {%> 
+        <% for(var i=0; i<global.groupMembers.length; i++) {%>
         <input type="checkbox" class="taskRadioBtn" name="requestJoin" value="<%= global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName'] %>"><%= global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName'] %></input><br>
-        <% } %> 
+        <% } %>
       </div>
       <input type="hidden" name="fullName" value= <%= global.fullName %>>
       <input type="hidden" name="groupId" value= <%= global.groupId %>>
-      <input class="modalSubmit" type="submit" value="Send Request">
+      <input class="modalSubmit" type="submit" value="Create Meeting">
     </form>
   </div>

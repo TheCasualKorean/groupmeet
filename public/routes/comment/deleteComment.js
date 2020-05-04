@@ -18,13 +18,13 @@ router.get('/deleteComment/:commentId',function(request,response){
             console.log(error);
             return response.status(500).send();
         }
-            
-       console.log(`Comment: ${request.params.commentId} removed!`);
-              
 
-              getGroupFunction.getGroupFunc();    
+       console.log(`Comment: ${request.params.commentId} removed!`);
+
+
+              getGroupFunction.getGroupFunc();
               return response.status(200).redirect("/groupDashboard");
-         
+
      });
 });
 

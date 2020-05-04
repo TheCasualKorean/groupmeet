@@ -44,19 +44,19 @@ and open the template in the editor.
             <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Remove</button>
             <input size="100" value="Bob Dylan" type="text" id="membersInput" class="groupSettingsInput" name="groupMember">
             <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Remove</button> -->
-            <% for(var i=0; i<global.groupMembers.length; i++) {%>  
-              <% var temp = global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName'] %>   
+            <% for(var i=0; i<global.groupMembers.length; i++) {%>
+              <% var temp = global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName'] %>
               <input size="100" value= "<%= temp %>" type="text" id="membersInput" class="groupSettingsInput" name="groupMember">
               <% if(fullName == global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName']) { %>
                 <!-- <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Leave Group</button> -->
-                <a href="/user/leaveGroup/<%= global.groupMembers[i]['_id']%>" class="actionButtonsTM">Leave</a>
+                <a href="/user/leaveGroup/<%= global.groupMembers[i]['_id']%>" class="TMButton">Leave</a>
               <% } %>
               <br>
               <br>
-              
+
             <% } %>
           </div>
-          
+
         </div>
         <div class="deleteDiv">
           <a href="/group/deleteGroup" class="actionButtonsTM">Delete Group</a>

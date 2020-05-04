@@ -16,10 +16,10 @@
       </div>
       <header id="taskManager">
         <div class="task">
-    
+
             <h1 id="taskManagerHeader">Meetings for <%= groupName %> </h1>
             <a href="/requestMeeting" class="groupbtn new">Create New</a>
-    
+
         </div>
       </header>
       <div class="hiddenOverflow">
@@ -34,25 +34,31 @@
                 <th class="tableHeader">Action</th>
               </tr>
             </thead>
-            <tbody>
-              <% if (fullName != "Not Signed In") {%>         
-                <% for(var i=0; i<global.groupMeetings.length; i++) {%>                  
+            <% if (global.groupMeetings.length != 0) {%>
+              <% for(var i=0; i<global.groupMeetings.length; i++) { %>
+                <tbody>
                   <tr>
                     <td class="tableCell"><%= global.groupMeetings[i]["creatorName"]%></td>
                     <td class="tableCell"><%= global.groupMeetings[i]["location"]%></td>
                     <td class="tableCell tableDescription">
-                     
+
                        <%= global.groupMeetings[i]["attendees"] %>
-                     
+
                     </td>
                     <td class="tableCell"><%= global.groupMeetings[i]["meetingTime"]%></td>
                     <td class="tableCell">
-                      <a href="/meeting/deleteMeeting/<%= global.groupMeetings[i]['_id']%>" class="actionButtonsTM">Delete</a>
+                      <a href="/meeting/deleteMeeting/<%= global.groupMeetings[i]['_id']%>" class="TMButton">Delete</a>
                     </td>
                   </tr>
-                <% } %>
+                </tbody>
               <% } %>
-            </tbody>
+            <% } else { %>
+              <tbody>
+                <tr>
+                  <td colspan="5" class="NoTask">Currently No Meetings Created</td>
+                </tr>
+              </tbody>
+            <% } %>
           </table>
         </div>
       </div>

@@ -130,21 +130,21 @@ function getGroupButtons(req,res,path) {
                 console.log("Groups: " + userGroups)
             return res.status("200").render(__dirname + path, {groups: userGroups});
         // response.render(__dirname + '/public/views/dashboard');//delete this after everything else in this GET is uncommented
-        
+
         }
         });
-    }   
+    }
     else{
         return res.status("200").render(__dirname + path)
     }
 }
 app.get('/dashboard', function(request, response) {
-   
+
     //THIS ALL WORKS IT IS JUST COMMENTED OUT SINCE LOGIN IS NOT IMPLEMENTED YET
     //Move this to the navigation partial.
    getGroupButtons(request, response,'/public/views/dashboard')
        console.log(global.userId);
-   
+
 });
 
 app.get('/groupdashboard', function(request, response) {

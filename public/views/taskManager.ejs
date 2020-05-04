@@ -29,47 +29,39 @@
       <div class="hiddenOverflow">
         <div class="scrollable">
           <table class="taskManagerTable">
-            <thead>
-              <tr>
-                <th class="tableHeader">Name</th>
-                <th class="tableHeader">Task</th>
-                <th class="tableHeader">Task Description</th>
-                <th class="tableHeader">Progress</th>
-                <th class="tableHeader">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tableCell">Matthew McCoy</td>
-                <td class="tableCell">Task Manager</td>
-                <td class="tableCell tableDescription">
-                  This is a description of what I am writing for this task.
-                  This is a description of what I am writing for this task.
-                  This is a description of what I am writing for this task.
-                </td>
-                <td class="tableCell">Need Help</td>
-                <td class="tableCell">
-                  <a href="/updateTask" class="actionButtonsTM">Update</a>
-                  <a href="#" class="actionButtonsTM">Delete</a>
-                </td>
-              </tr>
-              <% if (fullName != "Not Signed In") {%>    
-                <% for(var i=0; i<global.groupTasks.length; i++) {%>                  
-                  <tr>
-                    <td class="tableCell"><%= global.groupTasks[i]["creatorName"]%></td>
-                    <td class="tableCell"><%= global.groupTasks[i]["taskName"]%></td>
-                    <td class="tableCell tableDescription">
-                      <%= global.groupTasks[i]["description"]%>
-                    </td>
-                    <td class="tableCell"><%= global.groupTasks[i]["status"]%></td>
-                    <td class="tableCell">
-                      <a href="/updateTask/<%= global.groupTasks[i]['_id']%>" class="actionButtonsTM">Update</a>
-                      <a href="/task/deleteTask/<%= global.groupTasks[i]['_id']%>" class="actionButtonsTM">Delete</a>
-                    </td>
-                  </tr>
+              <thead>
+                <tr>
+                  <th class="tableHeader">Name</th>
+                  <th class="tableHeader">Task</th>
+                  <th class="tableHeader">Task Description</th>
+                  <th class="tableHeader">Progress</th>
+                  <th class="tableHeader">Action</th>
+                </tr>
+              </thead>
+              <% if (global.groupTasks.length != 0) {%>
+                <% for(var i=0; i<global.groupTasks.length; i++) {%>
+                  <tbody>
+                    <tr>
+                      <td class="tableCell"><%= global.groupTasks[i]["creatorName"]%></td>
+                      <td class="tableCell"><%= global.groupTasks[i]["taskName"]%></td>
+                      <td class="tableCell tableDescription">
+                        <%= global.groupTasks[i]["description"]%>
+                      </td>
+                      <td class="tableCell"><%= global.groupTasks[i]["status"]%></td>
+                      <td class="tableCell">
+                        <a href="/updateTask/<%= global.groupTasks[i]['_id']%>" class="TMButton">Update</a>
+                        <a href="/task/deleteTask/<%= global.groupTasks[i]['_id']%>" class="TMButton">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
                 <% } %>
+              <% } else { %>
+                <tbody>
+                  <tr>
+                    <td colspan="5" class="NoTask">Currently No Tasks Created</td>
+                  </tr>
+                </tbody>
               <% } %>
-            </tbody>
           </table>
         </div>
       </div>
