@@ -27,11 +27,6 @@ module.exports = {
 //         console.log("Connection error: ", err)
 //     })
 
-<<<<<<< HEAD
-     }
-
-=======
 //     }
   }
->>>>>>> a3237ac4f10452b2acce5e834b91a45e87bab20d
 }
