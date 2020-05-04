@@ -38,7 +38,7 @@ and open the template in the editor.
           </div> -->
           <div id="members">
             <h1 class="groupSettingsSubHead">Members</h1>
-            <div class="hiddenoverflow" >
+            <div class="hiddenoverflow">
               <div class="scrollable" style="height: 420px;">
             <!-- <input size="100" value="Jim Reeves" type="text" id="membersInput" class="groupSettingsInput" name="groupMember">
             <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Remove</button>
@@ -46,12 +46,12 @@ and open the template in the editor.
             <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Remove</button>
             <input size="100" value="Bob Dylan" type="text" id="membersInput" class="groupSettingsInput" name="groupMember">
             <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Remove</button> -->
-            <% for(var i=0; i<50; i++) {%>
-              <% var temp = global.groupMembers[0]['firstName'] + ' ' + global.groupMembers[0]['lastName'] %>
+            <% for(var i=0; i<global.groupMembers.length; i++) {%>
+              <% var temp = global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName'] %>
               <input size="100" value= "<%= temp %>" type="text" id="membersInput" class="groupSettingsInput" name="groupMember">
-              <% if(fullName == global.groupMembers[0]['firstName'] + ' ' + global.groupMembers[0]['lastName']) { %>
+              <% if(fullName == global.groupMembers[i]['firstName'] + ' ' + global.groupMembers[i]['lastName']) { %>
                 <!-- <button type="submit" value="Submit" class="groupmeet-btn urlBtn">Leave Group</button> -->
-                <a href="/user/leaveGroup/<%= global.groupMembers[0]['_id']%>" class="TMButton">Leave</a>
+                <a href="/user/leaveGroup/<%= global.groupMembers[i]['_id']%>" class="TMButton">Leave</a>
               <% } %>
               <br>
               <br>
