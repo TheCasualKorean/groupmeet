@@ -763,6 +763,30 @@ th {
   transition: 0.2s;
 }
 
+.TMButton2 {
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgb(150,45,32);
+  background-color: rgb(150,45,32);
+  padding: 3px 20px;
+  display: inline-block;
+  border-radius: 8px;
+  transition: 0.2s;
+  margin-left: 15px;
+}
+
+.TMButton3 {
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgb(150,45,32);
+  background-color: rgb(150,45,32);
+  padding: 13px 20px;
+  display: inline-block;
+  border-radius: 8px;
+  transition: 0.2s;
+  float: right;
+}
+
 .tableDescription {
   width: 500px;
   padding: 15px;
